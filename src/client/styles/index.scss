@@ -1,0 +1,33 @@
+/* Global Styles */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  margin: 0;
+}
+
+/* Main Content */
+.text-center {
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+#save-trip {
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  background-color: grey;
+  color: white;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+}
+
+#save-trip:hover {
+  background: seagreen;
+}
+
+#illustration {
+  width: 100%;
+}

@@ -1,162 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>Travel-App</title>
+    <title>Travel Planner</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="../styles/index.scss" />
   </head>
-
   <body>
-    <header>
-      <!-- Image and text -->
-      <nav class="navbar" style="background-color: currentcolor">
-        <a class="navbar-brand" href="http://localhost:8081/">
-          <img
-            src=""
-            width="30"
-            height="30"
-            class="d-inline-block align-top"
-            alt=""
-          />
-          Travel-app
-        </a>
-      </nav>
+    <header class="navbar navbar-expand-lg navbar-light bg-primary">
+      <h3 class="navbar-brand">Travel Planner</h3>
     </header>
-    <main>
-      <div class="container-fluid p-0">
-        <section class="main">
-          <div class="caption jumbotron jumbotron-fluid">
-            <div class="container search">
-              <h1 class="text-center header">Travel-Planner</h1>
-              <div class="row">
-                <input
-                  type="text"
-                  id="city"
-                  placeholder="City or Country name"
-                  aria-label="City"
-                  class="form-control col-md-12 mt-1"
-                />
-                <input
-                  type="date"
-                  id="date_start"
-                  placeholder="start date"
-                  class="form-control col-md-12 mt-1"
-                />
-                <input
-                  type="date"
-                  id="date_end"
-                  aria-label="Date"
-                  class="form-control col-md-12 mt-1"
-                />
-                <!-- <div class="input-group-append col-md-1"> -->
-                <button
-                  class="btn btn-secondary col-md-12 mt-1"
-                  type="button"
-                  id="button_search"
-                >
-                  Search
-                </button>
-                <!-- </div> -->
-              </div>
-            </div>
-          </div>
 
-          <div
-            class="modal fade"
-            id="tripModal"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="tripModalTitle"
-            aria-hidden="true"
-          >
-            <div
-              class="modal-dialog modal-lg modal-dialog-centered"
-              role="document"
-            >
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h3 class="modal-title trip_title" id="tripModalTitle"></h3>
-                  <button class="trip_cancel close" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <div class="container-fluid">
-                    <div class="media row">
-                      <img
-                        src=""
-                        class="images mr-3 col-12 col-lg-5"
-                        alt="Popular Images from Trip Location"
-                      />
-                      <div class="media-body col-12 col-lg-7">
-                        <h4 class="mt-0">
-                          Trip to:
-                          <span
-                            class="media_heading"
-                            style="color: crimson"
-                          ></span>
-                        </h4>
-                        <h6 class="mt-0">
-                          Departure:
-                          <span
-                            class="media_heading"
-                            style="color: crimson"
-                          ></span>
-                        </h6>
-                        <h6 class="mt-0">
-                          Return:
-                          <span
-                            class="media_heading"
-                            style="color: crimson"
-                          ></span>
-                        </h6>
-                        <h6 class="mt-0">
-                          Duration:
-                          <span
-                            class="media_heading"
-                            style="color: crimson"
-                          ></span>
-                        </h6>
-                        <span class="trip_countdown"></span>
-                        <span class="trip_weather"></span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary trip_cancel">
-                      Close
-                    </button>
-                    <button type="button" class="btn btn-primary trip_save">
-                      Save
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+    <main class="container mt-4">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="destination">Destination:</label>
+          <input
+            id="destination"
+            type="text"
+            name="destination"
+            placeholder="Desired Location"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="start-date">Start Date:</label>
+          <input
+            id="start-date"
+            type="date"
+            name="start-date"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="end-date">End Date:</label>
+          <input
+            id="end-date"
+            type="date"
+            name="end-date"
+            class="form-control"
+          />
+        </div>
+        <button class="btn" id="save-trip">Save Trip</button>
+        <hr style="height:2px;border-width:0;color:gray;background-color:gray" />
+        <div id="result" class="hidden">
+          <div class="card-body">
+            <h3 class="text-center">My Trip</h3>
+            <p class="card-text">
+              1. Destination is: <span id="location" class="text-danger"></span>
+            </p>
+            <p class="card-text">
+              2. Departure date: <span id="departure-date" class="text-danger"></span>
+            </p>
+            <p class="card-text">
+              3. Complete date: <span id="complete-date" class="text-danger"></span>
+            </p>
+            <p class="card-text">
+              4. The trip departs:
+              <span id="left-days" class="text-danger"></span> days away
+            </p>
+            <p class="card-text">
+              5. The trip is long:
+              <span id="trip-duration" class="text-danger"></span> days
+            </hp3>
+            <p class="card-text">
+              6. The temperature is:
+              <span id="temperature" class="text-danger"></span> <span>&#8451;</span>
+            </p>
+            <p class="card-text">
+              7. The humidity is:
+              <span id="relative-humidity" class="text-danger"></span> <span>%</span>
+            </p>
           </div>
-        </section>
-
-        <section>
-          <div class="row trips-container"></div>
-        </section>
+          <h5>The illustration:</h5>
+          <img id="illustration" alt="illustration" />
       </div>
     </main>
 
+    <footer class="footer bg-primary mt-5 py-3">
+      <div class="container text-center">
+          <h6 class="text-black mb-0">©2024 Design by Luong Van Linh</h6>
+      </div>
+    </footer>
+  
     <script>
-      // Check that service workers are supported
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
           navigator.serviceWorker
             .register("/service-worker.js")
-            .then((trip) => {
-              console.log("SW registered successfuly: ", trip);
+            .then((registration) => {
+              console.log(
+                "Service Worker registered successfully:",
+                registration
+              );
+            })
+            .catch((error) => {
+              console.log("Service Worker registration failed:", error);
             });
         });
       } else {
-        console.log("Service Working not supported");
+        console.log("Service Worker not supported");
       }
     </script>
   </body>

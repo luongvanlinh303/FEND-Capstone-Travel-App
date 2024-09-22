@@ -1,5 +1,3 @@
-const path = require("path");
-const webpack = require("webpack");
 const HTMLWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
@@ -13,8 +11,6 @@ module.exports = {
     library: "Client",
   },
   mode: "production",
-  devtool: "source-map",
-  stats: "verbose",
   optimization: {
     minimizer: [new TerserPlugin({}), new OptimizeCSSAssetsPlugin({})],
   },
@@ -43,15 +39,6 @@ module.exports = {
     new HTMLWebPackPlugin({
       template: "./src/client/view/index.html",
       filename: "index.html",
-    }),
-    new CleanWebpackPlugin({
-      // Simulate the removal of files
-      dry: true,
-      // Write Logs to Console
-      verbose: true,
-      // Automatically remove all unused webpack assets on rebuild
-      cleanStaleWebpackAssets: true,
-      protectWebpackAssets: false,
     }),
     new MiniCssExtractPlugin({ filename: "[name].css" }),
     new WorkboxPlugin.GenerateSW({

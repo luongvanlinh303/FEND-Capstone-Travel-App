@@ -1,59 +1,48 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const async = require("express-async-errors");
-const fetch = require("node-fetch");
+const listen = require("../server/listen-server-running");
 
-/* Server Setup */
 const app = express();
-app.use(cors());
+const port = 8080;
 
-// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
-
-// parse application/json
 app.use(bodyParser.json());
+app.use(cors());
+app.use(express.static("dist"));
 
-app.use(express.static("./dist"));
+// Trip data validation
+const validateTripData = (data) => {
+  const { location, startDate, endDate, temperature, humidity } = data;
+  return location && startDate && endDate && temperature && humidity;
+};
 
-const PORT = 8080;
-app.listen(PORT, () => {
-  console.log(`CORS-enabled web server listening on port ${PORT}`);
-});
+// Handle trip data
+const handleTripData = (data) => {
+  return data;
+};
 
-/* Trips Array */
-const trips = [];
-
-/* Routes */
+// Routes
 app.get("/", (req, res) => {
-  res.status(200).send("./dist/index.html");
+  res.sendFile("dist/index.html");
 });
 
-app.post("/saveData", (req, res, next) => {
-  if (req.body !== " ") {
-    const trip = req.body.trip;
-    trips.push(trip);
-    res.status(201).send(trip);
-  } else {
-    res.status(400).json("Bad Request");
+app.post("/save-trip", (req, res) => {
+  const tripData = req.body;
+
+  if (!validateTripData(tripData)) {
+    return res.status(400).json({ error: "Missing required trip data fields" });
+  }
+
+  try {
+    const savedTripData = handleTripData(tripData);
+    res.status(200).json(savedTripData);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while processing your request" });
   }
 });
 
-app.post("/forecast", async (req, res, next) => {
-  if (req.body.endpoint !== " ") {
-    const endpoint = req.body.endpoint;
-    try {
-      const response = await fetch(endpoint);
-      if (response.ok) {
-        const jsonRes = await response.json();
-        res.status(201).send(jsonRes);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  } else {
-    res.status(400).json("Bad Request");
-  }
-});
-
-module.exports = app;
+app.listen(port, () => listen(port));
