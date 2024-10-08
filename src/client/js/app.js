@@ -20,9 +20,7 @@ const isInputValid = (destination, startDate, endDate) =>
   new Date(endDate) >= new Date(startDate);
 
 // Save Trip
-const saveTrip = async (event) => {
-  event.preventDefault();
-
+const saveTrip = async () => {
   const destination = destinationTo.value.trim();
   const departureDate = startDate.value;
   const endingDate = endDate.value;
